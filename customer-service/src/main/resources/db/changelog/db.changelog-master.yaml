@@ -1,0 +1,66 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1-create-customers-table
+      author: Kamal
+      changes:
+        - createTable:
+            tableName: customers
+            columns:
+              - column:
+                  name: id
+                  type: BIGSERIAL
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+  - changeSet:
+      id: 2-add-customer-fields
+      author: Kamal
+      changes:
+        - addColumn:
+            tableName: customers
+            columns:
+              - column:
+                  name: first_name
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                    name: last_name
+                    type: varchar(255)
+                    constraints:
+                      nullable: false
+              - column:
+                    name: email
+                    type: varchar(255)
+                    constraints:
+                      nullable: false
+                      unique: true
+              - column:
+                    name: phone_number
+                    type: varchar(20)
+                    constraints:
+                      nullable: false
+                      unique: true
+              - column:
+                    name: pin
+                    type: varchar(20)
+                    constraints:
+                      nullable: false
+                      unique: true
+              - column:
+                    name: status
+                    type: varchar(50)
+                    constraints:
+                      nullable: false
+              - column:
+                    name: created_at
+                    type: timestamp
+                    constraints:
+                      nullable: false
+              - column:
+                    name: updated_at
+                    type: timestamp
+                    constraints:
+                      nullable: false
+
+
