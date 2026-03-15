@@ -3,10 +3,7 @@ package com.bank.customerservice.controller;
 import com.bank.customerservice.dto.CustomerRequestDto;
 import com.bank.customerservice.dto.CustomerResponseDto;
 import com.bank.customerservice.service.CustomerService;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/v1/customers")
@@ -24,8 +21,10 @@ public CustomerResponseDto createCustomer(@RequestBody CustomerRequestDto reques
   return   customerService.createCustomer(request);
 }
 
-
-
+@GetMapping("/{id}")
+public CustomerResponseDto getCustomerById(@PathVariable Long id){
+  return  customerService.getCustomerById(id);
+}
 
 
 

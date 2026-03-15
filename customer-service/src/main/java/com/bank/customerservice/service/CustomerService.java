@@ -3,10 +3,12 @@ package com.bank.customerservice.service;
 import com.bank.customerservice.dto.CustomerRequestDto;
 import com.bank.customerservice.dto.CustomerResponseDto;
 import com.bank.customerservice.entity.Customer;
+import com.bank.customerservice.exception.CustomerNotFoundException;
 import com.bank.customerservice.repository.CustomerRepository;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 @Service
 public class CustomerService {
@@ -28,21 +30,34 @@ public class CustomerService {
      customer.setUpdatedAt(LocalDateTime.now());
      customer.setStatus("ACTIVE");
 
-    Customer savedCustomer= customerRepository.save(customer);
-    CustomerResponseDto response=new CustomerResponseDto();
-
-    response.setFirstName(savedCustomer.getFirstName());
-    response.setLastName(savedCustomer.getLastName());
-    response.setEmail(savedCustomer.getEmail());
-    response.setPhoneNumber(savedCustomer.getPhoneNumber());
-    response.setStatus(savedCustomer.getStatus());
-    response.setCreatedAt(savedCustomer.getCreatedAt());
-    response.setUpdatedAt(savedCustomer.getUpdatedAt());
+    customerRepository.save(customer);
 
 
-    return response;
+
+    return mapToResponse(customer);
     }
+ public CustomerResponseDto getCustomerById(Long id ){
+    Customer customer= customerRepository.findById(id).orElseThrow(() -> new CustomerNotFoundException("Customer not found this id: "+id));
 
+return mapToResponse(customer);
+
+ }
+
+
+ private CustomerResponseDto mapToResponse(Customer customer){
+   CustomerResponseDto response = new CustomerResponseDto();
+     response.setFirstName(customer.getFirstName());
+     response.setLastName(customer.getLastName());
+     response.setEmail(customer.getEmail());
+     response.setPhoneNumber(customer.getPhoneNumber());
+     response.setStatus(customer.getStatus());
+     response.setCreatedAt(customer.getCreatedAt());
+     response.setUpdatedAt(customer.getUpdatedAt());
+
+   return response;
+
+
+ }
 
 
 
