@@ -3,6 +3,7 @@ package com.bank.customerservice.service;
 import com.bank.customerservice.dto.CustomerRequestDto;
 import com.bank.customerservice.dto.CustomerResponseDto;
 import com.bank.customerservice.entity.Customer;
+import com.bank.customerservice.entity.CustomerStatus;
 import com.bank.customerservice.exception.CustomerNotFoundException;
 import com.bank.customerservice.repository.CustomerRepository;
 import org.springframework.stereotype.Service;
@@ -29,7 +30,7 @@ public class CustomerService {
      customer.setPin(request.getPin());
      customer.setCreatedAt(LocalDateTime.now());
      customer.setUpdatedAt(LocalDateTime.now());
-     customer.setStatus("ACTIVE");
+     customer.setStatus(CustomerStatus.ACTIVE);
 
     customerRepository.save(customer);
 

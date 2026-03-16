@@ -3,6 +3,7 @@ package com.bank.customerservice.controller;
 import com.bank.customerservice.dto.CustomerRequestDto;
 import com.bank.customerservice.dto.CustomerResponseDto;
 import com.bank.customerservice.service.CustomerService;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,7 +20,7 @@ public CustomerController(CustomerService customerService){
 }
 
 @PostMapping
-public CustomerResponseDto createCustomer(@RequestBody CustomerRequestDto request){
+public CustomerResponseDto createCustomer(@Valid @RequestBody CustomerRequestDto request){
   return   customerService.createCustomer(request);
 }
 

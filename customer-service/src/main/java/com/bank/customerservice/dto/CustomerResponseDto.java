@@ -1,5 +1,6 @@
 package com.bank.customerservice.dto;
 
+import com.bank.customerservice.entity.CustomerStatus;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -22,7 +23,7 @@ public class CustomerResponseDto {
 
     private String phoneNumber;
 
-    private String status;
+    private CustomerStatus status;
 
     private LocalDateTime createdAt;
 
