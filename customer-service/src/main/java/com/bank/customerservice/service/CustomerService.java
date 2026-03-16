@@ -8,6 +8,7 @@ import com.bank.customerservice.repository.CustomerRepository;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -59,7 +60,12 @@ return mapToResponse(customer);
 
  }
 
+public List< CustomerResponseDto> getAllCustomers(){
 
+        List<CustomerResponseDto> customers = customerRepository.findAll().stream().map(c -> mapToResponse(c)).toList();
+
+      return customers;
+}
 
 
 

@@ -5,6 +5,8 @@ import com.bank.customerservice.dto.CustomerResponseDto;
 import com.bank.customerservice.service.CustomerService;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/v1/customers")
 public class CustomerController {
@@ -26,8 +28,12 @@ public CustomerResponseDto getCustomerById(@PathVariable Long id){
   return  customerService.getCustomerById(id);
 }
 
+@GetMapping()
+public List<CustomerResponseDto> getAllCustomers(){
 
+   return customerService.getAllCustomers();
 
+}
 
 
 
