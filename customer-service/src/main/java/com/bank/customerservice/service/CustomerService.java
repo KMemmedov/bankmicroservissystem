@@ -1,5 +1,6 @@
 package com.bank.customerservice.service;
 
+import com.bank.customerservice.CustomerServiceApplication;
 import com.bank.customerservice.dto.CustomerRequestDto;
 import com.bank.customerservice.dto.CustomerResponseDto;
 import com.bank.customerservice.entity.Customer;
@@ -68,7 +69,20 @@ public List< CustomerResponseDto> getAllCustomers(){
       return customers;
 }
 
+public CustomerResponseDto updateCustomer(Long id,CustomerRequestDto request){
 
+      Customer customer=customerRepository.findById(id).
+                orElseThrow(()->new CustomerNotFoundException("Customer not found with  id: "+id ));
+        customer.setFirstName(request.getFirstName());
+        customer.setLastName(request.getLastName());
+        customer.setEmail(request.getEmail());
+        customer.setPhoneNumber(request.getPhoneNumber());
+        customer.setPin(request.getPin());
+
+    Customer updatedCustomer=customerRepository.save(customer);
+     return mapToResponse(updatedCustomer);
+
+}
 
 
 

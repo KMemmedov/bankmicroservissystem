@@ -26,7 +26,8 @@ public CustomerResponseDto createCustomer(@Valid @RequestBody CustomerRequestDto
 
 @GetMapping("/{id}")
 public CustomerResponseDto getCustomerById(@PathVariable Long id){
-  return  customerService.getCustomerById(id);
+
+    return  customerService.getCustomerById(id);
 }
 
 @GetMapping()
@@ -34,6 +35,11 @@ public List<CustomerResponseDto> getAllCustomers(){
 
    return customerService.getAllCustomers();
 
+}
+@PutMapping("/{id}")
+public CustomerResponseDto updateCustomer (@PathVariable  Long id,@Valid @RequestBody CustomerRequestDto request){
+
+return customerService.updateCustomer(id, request);
 }
 
 

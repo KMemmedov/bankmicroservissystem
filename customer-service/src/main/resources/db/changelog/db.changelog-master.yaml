@@ -34,19 +34,19 @@ databaseChangeLog:
                     type: varchar(255)
                     constraints:
                       nullable: false
-                      unique: true
+
               - column:
                     name: phone_number
                     type: varchar(20)
                     constraints:
                       nullable: false
-                      unique: true
+
               - column:
                     name: pin
                     type: varchar(20)
                     constraints:
                       nullable: false
-                      unique: true
+
               - column:
                     name: status
                     type: varchar(50)
