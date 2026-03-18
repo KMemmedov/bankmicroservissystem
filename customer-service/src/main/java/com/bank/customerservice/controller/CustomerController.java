@@ -2,7 +2,7 @@ package com.bank.customerservice.controller;
 
 import com.bank.customerservice.dto.CustomerRequestDto;
 import com.bank.customerservice.dto.CustomerResponseDto;
-import com.bank.customerservice.service.CustomerService;
+import com.bank.customerservice.service.impl.CustomerServiceImpl;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,9 +12,9 @@ import java.util.List;
 @RequestMapping("/api/v1/customers")
 public class CustomerController {
 
-private final CustomerService customerService;
+private final CustomerServiceImpl customerService;
 
-public CustomerController(CustomerService customerService){
+public CustomerController(CustomerServiceImpl customerService){
 
     this.customerService=customerService;
 }
