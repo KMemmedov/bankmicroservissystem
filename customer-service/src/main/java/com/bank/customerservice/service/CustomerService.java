@@ -1,6 +1,5 @@
 package com.bank.customerservice.service;
 
-import com.bank.customerservice.CustomerServiceApplication;
 import com.bank.customerservice.dto.CustomerRequestDto;
 import com.bank.customerservice.dto.CustomerResponseDto;
 import com.bank.customerservice.entity.Customer;
@@ -11,7 +10,6 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class CustomerService {
