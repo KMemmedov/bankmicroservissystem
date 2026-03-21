@@ -5,8 +5,11 @@ import com.bank.customerservice.dto.CustomerResponseDto;
 import com.bank.customerservice.entity.Customer;
 import com.bank.customerservice.entity.CustomerStatus;
 import com.bank.customerservice.exception.CustomerNotFoundException;
+import com.bank.customerservice.mapper.CustomerMapper;
 import com.bank.customerservice.repository.CustomerRepository;
 import com.bank.customerservice.service.CustomerService;
+import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -15,10 +18,12 @@ import java.util.List;
 @Service
 public class CustomerServiceImpl implements CustomerService {
    private final CustomerRepository customerRepository;
+   private final CustomerMapper customerMapper;
 
-    public CustomerServiceImpl(CustomerRepository customerRepository){
+    public CustomerServiceImpl(CustomerRepository customerRepository, CustomerMapper customerMapper){
 
         this.customerRepository=customerRepository;
+        this.customerMapper = customerMapper;
     }
 
 @Override
@@ -37,36 +42,23 @@ public class CustomerServiceImpl implements CustomerService {
 
 
 
-    return mapToResponse(customer);
+    return customerMapper.toDto(customer);
     }
 
     @Override
  public CustomerResponseDto getCustomerById(Long id ){
     Customer customer= customerRepository.findById(id).orElseThrow(() -> new CustomerNotFoundException("Customer not found this id: "+id));
 
-return mapToResponse(customer);
+return customerMapper.toDto(customer);
 
  }
 
 
- private CustomerResponseDto mapToResponse(Customer customer){
-   CustomerResponseDto response = new CustomerResponseDto();
-     response.setFirstName(customer.getFirstName());
-     response.setLastName(customer.getLastName());
-     response.setEmail(customer.getEmail());
-     response.setPhoneNumber(customer.getPhoneNumber());
-     response.setStatus(customer.getStatus());
-     response.setCreatedAt(customer.getCreatedAt());
-     response.setUpdatedAt(customer.getUpdatedAt());
 
-   return response;
-
-
- }
 @Override
 public List< CustomerResponseDto> getAllCustomers(){
 
-        List<CustomerResponseDto> customers = customerRepository.findAll().stream().map(c -> mapToResponse(c)).toList();
+        List<CustomerResponseDto> customers = customerRepository.findAll().stream().map(c -> customerMapper.toDto(c)).toList();
 
       return customers;
 }
@@ -82,7 +74,7 @@ public CustomerResponseDto updateCustomer(Long id,CustomerRequestDto request){
         customer.setPin(request.getPin());
 
     Customer updatedCustomer=customerRepository.save(customer);
-     return mapToResponse(updatedCustomer);
+     return customerMapper.toDto(updatedCustomer);
 
 }
 
