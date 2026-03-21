@@ -42,6 +42,12 @@ public CustomerResponseDto updateCustomer (@PathVariable  Long id,@Valid @Reques
 return customerService.updateCustomer(id, request);
 }
 
+@DeleteMapping("/{id}")
+public void deleteCustomer(@PathVariable Long id){
+
+    customerService.deleteCustomer(id);
+
+}
 
 
 

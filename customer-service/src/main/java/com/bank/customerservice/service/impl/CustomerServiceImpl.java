@@ -58,7 +58,7 @@ return customerMapper.toDto(customer);
 @Override
 public List< CustomerResponseDto> getAllCustomers(){
 
-        List<CustomerResponseDto> customers = customerRepository.findAll().stream().map(c -> customerMapper.toDto(c)).toList();
+        List<CustomerResponseDto> customers = customerRepository.findActiveCustomers(CustomerStatus.ACTIVE).stream().map(c -> customerMapper.toDto(c)).toList();
 
       return customers;
 }
@@ -78,9 +78,13 @@ public CustomerResponseDto updateCustomer(Long id,CustomerRequestDto request){
 
 }
 
+    @Override
+    public void deleteCustomer(Long id) {
+        Customer customer  = customerRepository.findById(id).orElseThrow(()->new CustomerNotFoundException("Customer not found this id: "+ id));
+        customer.setStatus(CustomerStatus.INACTIVE);
+        customerRepository.save(customer);
 
-
-
+    }
 
 
 }

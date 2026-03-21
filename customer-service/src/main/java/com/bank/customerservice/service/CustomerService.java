@@ -10,5 +10,5 @@ public interface CustomerService {
     CustomerResponseDto getCustomerById(Long id );
     List< CustomerResponseDto> getAllCustomers();
     CustomerResponseDto updateCustomer(Long id,CustomerRequestDto request);
-
+    void deleteCustomer(Long id);
 }
