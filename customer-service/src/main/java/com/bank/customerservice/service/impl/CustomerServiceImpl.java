@@ -5,11 +5,10 @@ import com.bank.customerservice.dto.CustomerResponseDto;
 import com.bank.customerservice.entity.Customer;
 import com.bank.customerservice.entity.CustomerStatus;
 import com.bank.customerservice.exception.CustomerNotFoundException;
+import com.bank.customerservice.exception.EmailAlreadyExistsException;
 import com.bank.customerservice.mapper.CustomerMapper;
 import com.bank.customerservice.repository.CustomerRepository;
 import com.bank.customerservice.service.CustomerService;
-import lombok.AllArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -28,6 +27,9 @@ public class CustomerServiceImpl implements CustomerService {
 
 @Override
     public CustomerResponseDto createCustomer(CustomerRequestDto request){
+        if (customerRepository.existsActiveByEmail(request.getEmail(), CustomerStatus.ACTIVE)){
+          throw new EmailAlreadyExistsException("This email already exists: "+request.getEmail());
+        }
      Customer customer = new Customer();
      customer.setFirstName(request.getFirstName());
      customer.setLastName(request.getLastName());
@@ -67,12 +69,17 @@ public CustomerResponseDto updateCustomer(Long id,CustomerRequestDto request){
 
       Customer customer=customerRepository.findById(id).
                 orElseThrow(()->new CustomerNotFoundException("Customer not found with  id: "+id ));
+      if(!(customer.getEmail().equals(request.getEmail()))){
+         if(customerRepository.existsActiveByEmail(request.getEmail(),CustomerStatus.ACTIVE)) {
+             throw  new EmailAlreadyExistsException("This email already exists: "+request.getEmail());
+         }
+      }
         customer.setFirstName(request.getFirstName());
         customer.setLastName(request.getLastName());
         customer.setEmail(request.getEmail());
         customer.setPhoneNumber(request.getPhoneNumber());
         customer.setPin(request.getPin());
-
+        customer.setUpdatedAt(LocalDateTime.now());
     Customer updatedCustomer=customerRepository.save(customer);
      return customerMapper.toDto(updatedCustomer);
 
