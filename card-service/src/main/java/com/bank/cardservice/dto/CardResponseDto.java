@@ -24,8 +24,9 @@ public class CardResponseDto {
     private BigDecimal balance;
     private BigDecimal creditLimit;
     private CardStatus status;
-    private LocalDate expiryDate;
+    private LocalDate expireDate;
     private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
 
 
 

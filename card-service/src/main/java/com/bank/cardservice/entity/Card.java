@@ -6,6 +6,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
@@ -34,7 +35,7 @@ public class Card {
     @Column(name = "balance",precision = 19,scale = 2)
     private BigDecimal balance;
 
-    @Column(name = "creditBalance",precision = 19,scale = 2)
+    @Column(name = "credit_limit",precision = 19,scale = 2)
     private BigDecimal creditLimit;
 
     @Enumerated(EnumType.STRING)
@@ -42,7 +43,7 @@ public class Card {
     private CardStatus status;
 
     @Column(name = "expire_date",nullable = false)
-    private LocalDateTime expireDate;
+    private LocalDate expireDate;
 
     @Column(name = "cvv",nullable = false,length = 3)
     private String cvv;

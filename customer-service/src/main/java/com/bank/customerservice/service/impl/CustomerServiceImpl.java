@@ -40,11 +40,11 @@ public class CustomerServiceImpl implements CustomerService {
      customer.setUpdatedAt(LocalDateTime.now());
      customer.setStatus(CustomerStatus.ACTIVE);
 
-    customerRepository.save(customer);
+    Customer savedCustomer = customerRepository.save(customer);
+
+    return customerMapper.toDto(savedCustomer);
 
 
-
-    return customerMapper.toDto(customer);
     }
 
     @Override

@@ -49,7 +49,7 @@ databaseChangeLog:
                     nullable: false
 
               - column:
-                  name: expiry_date
+                  name: expire_date
                   type: DATE
                   constraints:
                     nullable: false
