@@ -1,8 +1,6 @@
 package com.bank.cardservice.service;
 
-import com.bank.cardservice.dto.CardRequestDto;
-import com.bank.cardservice.dto.CardResponseDto;
-import com.bank.cardservice.dto.UpdateCardRequestDto;
+import com.bank.cardservice.dto.*;
 
 import java.util.List;
 
@@ -17,4 +15,16 @@ public interface CardService {
     public CardResponseDto getCardById(Long id);
 
     public CardResponseDto updateCard(Long id, UpdateCardRequestDto request);
+
+    public CardResponseDto blockCard(Long id);
+
+    public CardResponseDto unblockCard(Long id);
+
+    public CardResponseDto closeCard(Long id);
+
+    public CardResponseDto reopenCard(Long id);
+
+    public CardResponseDto deposit(Long id, DepositRequestDto request);
+
+    public CardResponseDto withDraw(Long id, WithdrawRequestDto request);
 }

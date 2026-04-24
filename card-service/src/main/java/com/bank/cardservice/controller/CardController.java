@@ -1,9 +1,7 @@
 package com.bank.cardservice.controller;
 
 
-import com.bank.cardservice.dto.CardRequestDto;
-import com.bank.cardservice.dto.CardResponseDto;
-import com.bank.cardservice.dto.UpdateCardRequestDto;
+import com.bank.cardservice.dto.*;
 import com.bank.cardservice.service.CardService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -46,5 +44,40 @@ public class CardController {
 
        return  ResponseEntity.ok(cardService.updateCard(id,request));
    }
+   @PatchMapping("/{id}/block")
+    public ResponseEntity<CardResponseDto> blockCard(@PathVariable Long id){
+
+       return ResponseEntity.ok(cardService.blockCard(id));
+
+   }
+   @PatchMapping("/{id}/unblock")
+   public ResponseEntity<CardResponseDto> unblockCard(@PathVariable Long id){
+
+
+        return ResponseEntity.ok(cardService.unblockCard(id)    );
+   }
+
+   @PatchMapping("/{id}/close")
+   public ResponseEntity<CardResponseDto> closeCard(@PathVariable Long id){
+
+
+        return ResponseEntity.ok(cardService.closeCard(id));
+   }
+    @PatchMapping("/{id}/reopen")
+    public ResponseEntity<CardResponseDto> reopenCard(@PathVariable Long id) {
+        return ResponseEntity.ok(cardService.reopenCard(id));
+    }
+
+    @PatchMapping("/{id}/deposit")
+    public ResponseEntity<CardResponseDto>deposit(@PathVariable Long id,@Valid @RequestBody DepositRequestDto request){
+
+        return ResponseEntity.ok(cardService.deposit(id, request));
+    }
+
+    @PatchMapping("/{id}/withdraw")
+    public ResponseEntity<CardResponseDto>withdraw(@PathVariable Long id,@Valid @RequestBody WithdrawRequestDto request){
+
+        return ResponseEntity.ok(cardService.withDraw(id, request));
+    }
 
 }
