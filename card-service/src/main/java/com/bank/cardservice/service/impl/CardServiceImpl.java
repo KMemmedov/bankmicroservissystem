@@ -8,6 +8,7 @@ import com.bank.cardservice.exception.*;
 import com.bank.cardservice.mapper.CardMapper;
 import com.bank.cardservice.repository.CardRepository;
 import com.bank.cardservice.service.CardService;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.cglib.core.Local;
 import org.springframework.stereotype.Service;
@@ -206,18 +207,11 @@ public class CardServiceImpl implements CardService {
             CardStatus status = card.getStatus();
 
             if (status != CardStatus.CLOSED && status != CardStatus.EXPIRED) {
-
                card.setStatus(CardStatus.EXPIRED);
                card.setUpdatedAt(LocalDateTime.now());
-
                 cardRepository.save(card);
-
            }
-
-
-
         }
-
     }
 
     @Override
@@ -297,5 +291,45 @@ public class CardServiceImpl implements CardService {
         return cardMapper.toDto(savedCard);
 
     }
+    @Transactional
+    @Override
+    public CardResponseDto transfer(TransferRequestDto request) {
+        Card fromCard =cardRepository.findById(request.getFromCardId())
+                .orElseThrow(() -> new CardNotFoundException("Card not found with id: "+request.getFromCardId()));
+        Card toCard = cardRepository.findById(request.getToCardId()).
+                orElseThrow(() -> new CardNotFoundException("Card not found with id: "+request.getToCardId()));
+        isCardExpired(fromCard);
+        isCardExpired(toCard);
+        if (fromCard.getStatus() == CardStatus.EXPIRED) {
+            throw new InvalidCardOperationException("Card is expired");
+        }
+        if (fromCard.getStatus() == CardStatus.CLOSED) {
+            throw new InvalidCardOperationException("Card is closed");
+        }
+        if (toCard.getStatus() == CardStatus.EXPIRED) {
+            throw new InvalidCardOperationException("Card is expired");
+        }
+
+        if (toCard.getStatus() == CardStatus.CLOSED) {
+            throw new InvalidCardOperationException("Card is closed");
+        }
+        if(fromCard.equals(toCard) ){
+            throw new InvalidCardOperationException("Cannot transfer to the same card");
+        }
+
+        if (fromCard.getBalance().compareTo(request.getAmount()) < 0) {
+            throw new InvalidCardOperationException("Insufficient balance");
+        }
+        fromCard.setBalance(fromCard.getBalance().subtract(request.getAmount()));
+        toCard.setBalance(toCard.getBalance().add(request.getAmount()));
+
+        cardRepository.save(fromCard);
+        cardRepository.save(toCard);
+
+       return cardMapper.toDto(fromCard);
+
+
+    }
+
 
 }

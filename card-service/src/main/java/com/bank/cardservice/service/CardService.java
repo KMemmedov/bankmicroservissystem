@@ -27,4 +27,6 @@ public interface CardService {
     public CardResponseDto deposit(Long id, DepositRequestDto request);
 
     public CardResponseDto withDraw(Long id, WithdrawRequestDto request);
+
+    public CardResponseDto transfer(TransferRequestDto request);
 }

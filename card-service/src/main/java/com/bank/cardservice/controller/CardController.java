@@ -79,5 +79,10 @@ public class CardController {
 
         return ResponseEntity.ok(cardService.withDraw(id, request));
     }
+    @PostMapping("/transfer")
+    public ResponseEntity<CardResponseDto>transfer(@Valid @RequestBody TransferRequestDto request){
+
+      return ResponseEntity.ok(cardService.transfer(request));
+    }
 
 }
