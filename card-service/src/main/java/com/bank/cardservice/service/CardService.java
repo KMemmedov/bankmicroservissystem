@@ -29,4 +29,6 @@ public interface CardService {
     public CardResponseDto withDraw(Long id, WithdrawRequestDto request);
 
     public CardResponseDto transfer(TransferRequestDto request);
+
+    public List<CardResponseDto> getCardsByCustomerId(Long customerId);
 }

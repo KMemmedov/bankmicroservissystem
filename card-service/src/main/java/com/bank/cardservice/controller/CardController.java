@@ -84,5 +84,11 @@ public class CardController {
 
       return ResponseEntity.ok(cardService.transfer(request));
     }
+    @GetMapping("/customer/{customerId}")
+    public ResponseEntity<List<CardResponseDto>> getCardsByCustomerId(@PathVariable Long customerId) {
+
+        return ResponseEntity.ok(cardService.getCardsByCustomerId(customerId));
+    }
+
 
 }

@@ -327,9 +327,17 @@ public class CardServiceImpl implements CardService {
         cardRepository.save(toCard);
 
        return cardMapper.toDto(fromCard);
-
-
     }
+    @Override
+    public List<CardResponseDto> getCardsByCustomerId(Long customerId) {
 
+        List<Card> cards = cardRepository.findByCustomerId(customerId);
+
+        cards.forEach(this::isCardExpired);
+
+        return cards.stream()
+                .map(cardMapper::toDto)
+                .toList();
+    }
 
 }
